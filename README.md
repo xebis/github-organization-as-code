@@ -10,6 +10,38 @@ Automate GitHub organization repository creation with YAML configuration, powere
 
 This GitHub repository was automatically created using the code in this repository.
 
+## Installation and Configuration
+
+Create a GitHub App:
+
+- GitHub / *Organization* / Settings / Developer Settings / GitHub Apps / **New GitHub App**
+  - Register new GitHub App
+    - GitHub App name: *Your GitHub App name*
+      - Description: *Your GitHub App description*
+    - HomepageURL: *Your GitHub App URL*
+  - Webhook
+    - Active: unchecked
+  - Permissions
+    - Repository permissions
+      - Administration: Read and write
+    - Organization permissions
+      - Administration: Read and write
+    - Where can this GitHub App be installed?:  
+      Only on this account *(for installations only in the current organization)*  
+      Any account *(for installations in any organization)*
+
+Install the GitHub App:
+
+- GitHub / *Organization* / Settings / Developer Settings / GitHub Apps / *Your GitHub App name* / Install App
+  - **For each** *owner*
+    - **Install**
+      - for these repositories: All repositories
+      - **Install**
+
+Use the GitHub App:
+
+- GitHub / *Organization* / Settings / Developer Settings / GitHub Apps / *Your GitHub App name* / General / Private keys / **Generate a private key**
+
 ## Usage
 
 Edit the GitHub organization YAML configuration [`gh-org.yaml`](gh-org.yaml):
