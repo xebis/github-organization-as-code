@@ -48,10 +48,23 @@ Edit the GitHub organization YAML configuration [`gh-org.yaml`](gh-org.yaml):
 
 ```yaml
 ---
+default-properties: # OPTIONAL
+  visibility: public # OPTIONAL
+  has_issues: true # OPTIONAL
+  has_discussions: true # OPTIONAL
+  has_projects: true # OPTIONAL
+  has_wiki: true # OPTIONAL
 repositories:
-  - id: repo-slug
-    description: Repository description.
+  - name: repo-slug
+    description: Repository description. # OPTIONAL
+    visibility: public # OPTIONAL
+    has_issues: true # OPTIONAL
+    has_discussions: true # OPTIONAL
+    has_projects: true # OPTIONAL
+    has_wiki: true # OPTIONAL
 ```
+
+Defaults are the same as in the Terraform provider `github` resource `github_repository`, see [Terraform Registry / Providers / integrations / github / resources / github_repository](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository#argument-reference).
 
 Apply the configuration using Terraform:
 
