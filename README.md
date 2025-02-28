@@ -88,6 +88,9 @@ terraform plan
 terraform apply
 ```
 
+> [!caution]
+> The GitHub App PEM file, S3 API credentials, configuration code, and Terraform state are key security elements.
+
 ## Credits and Acknowledgments
 
 - Martin Bružina - Author
