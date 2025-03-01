@@ -1,18 +1,22 @@
 # GitHub Organization as Code
 
-Streamline GitHub organization repository management with YAML configuration, GitHub workflows, AWS S3 storage, and GitHub App installation—powered by Terraform under the hood.
+Manage your GitHub organization repositories with GitOps principles using YAML configuration, GitHub Actions, AWS S3 storage, and GitHub App integration—powered by Terraform.
 
 ## Features
 
-Automate GitHub organization repository creation with YAML configuration, powered by Terraform, stored at AWS S3 storage, and configured using GitHub App integration.
+- **Automated Repository Management** - Define repositories, and repository properties using simple YAML file.
+- **GitOps Workflow** - Manage configurations via pull requests and automate updates using GitHub Actions.
+- **Terraform** - Uses Terraform under the hood to apply changes efficiently.
+- **Terraform State Management** - Stores Terraform state securely in AWS S3.
+- **GitHub App Integration** - Uses a GitHub App for authentication and API interactions.
 
 ### Fun Fact
 
-This GitHub repository was automatically created using the code in this repository.
+This repository was automatically created and is continuously managed using the very code inside it!
 
 ## Installation and Configuration
 
-Prepare a bucket at AWS S3 or compatible storage.
+Set up an AWS S3 bucket or a compatible storage service.
 
 Create a GitHub App:
 
@@ -40,9 +44,31 @@ Install the GitHub App:
       - for these repositories: All repositories
       - **Install**
 
-Use the GitHub App:
+Get the GitHub App credentials:
 
 - GitHub / *Organization* / Settings / Developer Settings / GitHub Apps / *Your GitHub App name* / General / Private keys / **Generate a private key**
+
+Set up GitHub actions, variables and secrets:
+
+- GitHub / *Repository* / Settings
+  - Actions / General
+    - Workflow permissions: Read and write permissions
+  - Secrets and variables / Actions / Actions secrets and variables
+    - Secrets
+      - **New repository secret**
+        - `APP_PEM_FILE` (`GITHUB_APP_PEM_FILE` contents)
+        - `AWS_ACCESS_KEY_ID`
+        - `AWS_SECRET_ACCESS_KEY`
+    - Variables
+      - **New repository variable**
+        - `APP_ID` (`GITHUB_APP_ID`)
+        - `APP_INSTALLATION_ID` (`GITHUB_APP_INSTALLATION_ID`)
+        - `AWS_ENDPOINT_URL_S3`
+        - `AWS_REGION`
+        - `OWNER` (`GITHUB_OWNER`)
+
+> [!caution]
+> The GitHub App PEM file, S3 API credentials, Terraform state, GitHub repository secrets, and configuration code are key security elements.
 
 ## Usage
 
@@ -87,9 +113,6 @@ terraform init
 terraform plan
 terraform apply
 ```
-
-> [!caution]
-> The GitHub App PEM file, S3 API credentials, configuration code, and Terraform state are key security elements.
 
 ## Credits and Acknowledgments
 

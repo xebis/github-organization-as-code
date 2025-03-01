@@ -1,4 +1,4 @@
 ---
 repositories:
   - name: github-organization-as-code
-    description: Streamline GitHub organization repository management with YAML configuration, GitHub workflows, and GitHub App installation—powered by Terraform under the hood.
+    description: Manage your GitHub organization repositories with GitOps principles using YAML configuration, GitHub Actions, AWS S3 storage, and GitHub App integration—powered by Terraform.
