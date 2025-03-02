@@ -51,7 +51,20 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('<!-- GitHub Actions Terraform PR comment bot -->')
+            });
+
+            // 2. Put together bot new comment contents for the PR
+            const output = `<!-- GitHub Actions Terraform PR comment bot -->
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
 
             <details><summary>Show Plan</summary>
@@ -63,12 +76,22 @@ jobs:
             </details>
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
+            // 3. Delete previous comment for the PR
+            if (botComment) {
+              github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+              });
+            }
+
+            // 4. Create a new comment
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
+              issue_number: context.issue.number,
               body: output
-            })
+            });
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
