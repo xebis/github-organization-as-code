@@ -85,6 +85,8 @@ default-properties: # OPTIONAL
 repositories:
   - name: repo-slug
     description: Repository description. # OPTIONAL
+    topics: # OPTIONAL
+      - github-topic-1
     visibility: public # OPTIONAL
     has_issues: true # OPTIONAL
     has_discussions: true # OPTIONAL

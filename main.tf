@@ -9,6 +9,7 @@ resource "github_repository" "repo" {
   name     = each.value.name
 
   description     = try(each.value.description, null)
+  topics          = try(each.value.topics, null)
   visibility      = try(each.value.visibility, local.default_properties.visibility, null)
   has_issues      = try(each.value.has_issues, local.default_properties.has_issues, null)
   has_discussions = try(each.value.has_discussions, local.default_properties.has_discussions, null)
