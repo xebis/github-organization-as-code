@@ -1,0 +1,8 @@
+---
+repositories:
+  - name: .github
+    description: Xebis Test organization profile.
+    topics:
+      - github-organization-profile
+      - github-profile
+      - github-profile-readme
