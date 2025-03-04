@@ -8,9 +8,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "xebis-terraform"
-    key          = "github-xebis"
-    use_lockfile = true # Set to false only for non-AWS S3 compatible APIs without "conditional object PUTs" capability
+    bucket               = "xebis-terraform"
+    key                  = "terraform.tfstate"
+    workspace_key_prefix = "github"
+    use_lockfile         = true # Set to false only for non-AWS S3 compatible APIs without "conditional object PUTs" capability
 
     # Only for non-AWS S3 compatible APIs
     skip_credentials_validation = true

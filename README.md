@@ -1,6 +1,6 @@
 # GitHub Organization as Code
 
-Manage your GitHub organization repositories with GitOps principles using YAML configuration, GitHub Actions, AWS S3 storage, and GitHub App integration—powered by Terraform.
+Manage your GitHub organization's repositories using GitOps principles with a YAML-based configuration, GitHub Actions with reusable workflows, AWS S3 for storage, and GitHub App integration.
 
 ## Features
 
@@ -16,7 +16,30 @@ This repository was automatically created and is continuously managed using the 
 
 ## Installation and Configuration
 
+- Configure an AWS S3 bucket to store Terraform state files.
+- Set up a GitHub App and its installation to handle authentication and authorization for your GitHub Organization.
+- Implement GitOps by setting up a GitHub repository with:
+  - YAML-based configuration
+  - GitHub workflows
+  - Repository variables and secrets
+
+> [!caution]
+> The GitHub App PEM file, S3 API credentials, Terraform state, GitHub repository secrets, and configuration code are key security elements.
+
+### Set Up AWS S3 Bucket
+
 Set up an AWS S3 bucket or a compatible storage service.
+
+> [!important]
+> Ensure you have the following details ready:
+>
+> - Bucket Name
+> - Access Key ID
+> - Secret Access Key
+> - Region
+> - S3 Endpoint URL (only required for non-AWS S3-compatible services)
+
+### Set Up GitHub Organizations
 
 Create a GitHub App:
 
@@ -48,6 +71,37 @@ Get the GitHub App credentials:
 
 - GitHub / *Organization* / Settings / Developer Settings / GitHub Apps / *Your GitHub App name* / General / Private keys / **Generate a private key**
 
+> [!important]
+> Ensure you have the following details ready:
+>
+> - GitHub Owner
+> - GitHub App ID
+> - GitHub App Installation ID
+> - GitHub App PEM File
+
+### Set Up GitHub Repository for GitHub Organization Management
+
+Create GitHub organization YAML configuration file. See [GitHub Organization YAML](#github-organization-yaml) below.
+
+For example:
+
+```yaml
+---
+repositories:
+  - name: .github
+    description: The organization profile.
+    topics:
+      - github-organization-profile
+      - github-profile
+      - github-profile-readme
+```
+
+Create GitHub workflow planning and applying configuration changes to the GitHub Organization:
+
+```yaml
+#TODO
+```
+
 Set up GitHub actions, variables and secrets:
 
 - GitHub / *Repository* / Settings
@@ -67,12 +121,14 @@ Set up GitHub actions, variables and secrets:
         - `AWS_REGION`
         - `OWNER` (`GITHUB_OWNER`)
 
-> [!caution]
-> The GitHub App PEM file, S3 API credentials, Terraform state, GitHub repository secrets, and configuration code are key security elements.
-
 ## Usage
 
-Edit the GitHub organization YAML configuration [`gh-org.yaml`](gh-org.yaml):
+The GitHub organization YAML configuration post a Terraform plan as a pull request comment whenever a pull request to the main branch is created or whenever a new commit to the pull request is pushed. Once the pull request is merged into `main`, the plan is applied automatically.
+
+> [!note]
+> The state is stored as JSON object `github/<github owner>/terraform.tfstate` in the bucket.
+
+### GitHub Organization YAML
 
 ```yaml
 ---
@@ -96,7 +152,7 @@ repositories:
 
 Defaults are the same as in the Terraform provider `github` resource `github_repository`, see [Terraform Registry / Providers / integrations / github / resources / github_repository](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository#argument-reference).
 
-Modify the Terraform backend configuration in [`config.tf`](config.tf) as needed.
+### Local Usage
 
 Apply the configuration using Terraform:
 
@@ -111,10 +167,19 @@ export GITHUB_APP_ID=<app-id>
 export GITHUB_APP_INSTALLATION_ID=<app-installation-id>
 export GITHUB_APP_PEM_FILE=$(cat <app-private-key.pem>)
 
+export TF_WORKSPACE="$GITHUB_OWNER"
+export TF_VAR_path="test.yaml"
+
 terraform init
 terraform plan
 terraform apply
 ```
+
+## Testing
+
+This repository is tested using [`test.yaml`](test.yaml) as the configuration file for the [Xebis Test GitHub Organization](https://github.com/xebis-test) settings and repositories.
+
+The workflow is designed to post a Terraform plan as a pull request comment whenever a pull request to the main branch is created or whenever a new commit to the pull request is pushed. Once the pull request is merged into `main`, the plan is applied automatically.
 
 ## Credits and Acknowledgments
 
