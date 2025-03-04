@@ -16,6 +16,8 @@ env:
   GITHUB_APP_ID: ${{ vars.APP_ID }}
   GITHUB_APP_INSTALLATION_ID: ${{ vars.APP_INSTALLATION_ID }}
   GITHUB_APP_PEM_FILE: ${{ secrets.APP_PEM_FILE }}
+  TF_WORKSPACE: ${{ vars.OWNER }}
+  TF_VAR_path: test.yaml
 
 jobs:
   terraform:

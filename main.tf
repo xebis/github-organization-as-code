@@ -1,5 +1,5 @@
 locals {
-  config             = yamldecode(file("gh-org.yaml"))
+  config             = yamldecode(file(var.path))
   default_properties = try(local.config.default-properties, null)
   repositories       = local.config.repositories
 }
