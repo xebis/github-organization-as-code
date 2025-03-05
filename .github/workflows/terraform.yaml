@@ -6,18 +6,45 @@ on:
   pull_request:
     branches:
       - main
+  workflow_call:
+    inputs:
+      aws_region:
+        type: string
+        required: true
+      aws_endpoint_url_s3:
+        type: string
+        required: true
+      gh_owner:
+        type: string
+        required: true
+      gh_app_id:
+        type: string
+        required: true
+      gh_app_installation_id:
+        type: string
+        required: true
+      path:
+        type: string
+        required: true
+    secrets:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
+        required: true
+      gh_app_pem_file:
+        required: true
 
 env:
-  AWS_REGION: ${{ vars.AWS_REGION }}
-  AWS_ENDPOINT_URL_S3: ${{ vars.AWS_ENDPOINT_URL_S3 }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  GITHUB_OWNER: ${{ vars.OWNER }}
-  GITHUB_APP_ID: ${{ vars.APP_ID }}
-  GITHUB_APP_INSTALLATION_ID: ${{ vars.APP_INSTALLATION_ID }}
-  GITHUB_APP_PEM_FILE: ${{ secrets.APP_PEM_FILE }}
-  TF_WORKSPACE: ${{ vars.OWNER }}
-  TF_VAR_path: test.yaml
+  AWS_REGION: ${{ inputs.aws_region || vars.AWS_REGION }}
+  AWS_ENDPOINT_URL_S3: ${{ inputs.aws_endpoint_url_s3 || vars.AWS_ENDPOINT_URL_S3 }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id || secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key || secrets.AWS_SECRET_ACCESS_KEY }}
+  GITHUB_OWNER: ${{ inputs.gh_owner || vars.OWNER }}
+  GITHUB_APP_ID: ${{ inputs.gh_app_id || vars.APP_ID }}
+  GITHUB_APP_INSTALLATION_ID: ${{ inputs.gh_app_installation_id || vars.APP_INSTALLATION_ID }}
+  GITHUB_APP_PEM_FILE: ${{ secrets.gh_app_pem_file || secrets.APP_PEM_FILE }}
+  TF_WORKSPACE: ${{ inputs.gh_owner || vars.OWNER }}
+  TF_VAR_path: ${{ inputs.path || 'test.yaml' }}
 
 jobs:
   terraform:

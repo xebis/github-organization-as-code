@@ -99,7 +99,29 @@ repositories:
 Create GitHub workflow planning and applying configuration changes to the GitHub Organization:
 
 ```yaml
-#TODO
+---
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  call-terraform:
+    uses: xebis/github-organization-as-code/.github/workflows/terraform.yaml@v0
+    with:
+      aws_region: ${{ vars.AWS_REGION }}
+      aws_endpoint_url_s3: ${{ vars.AWS_ENDPOINT_URL_S3 }}
+      gh_owner: ${{ vars.GH_OWNER }}
+      gh_app_id: ${{ vars.GH_APP_ID }}
+      gh_app_installation_id: ${{ vars.GH_APP_INSTALLATION_ID }}
+      path: xebis.yaml
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      gh_app_pem_file: ${{ secrets.GH_APP_PEM_FILE }}
 ```
 
 Set up GitHub actions, variables and secrets:
