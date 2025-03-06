@@ -44,7 +44,7 @@ env:
   GITHUB_APP_INSTALLATION_ID: ${{ inputs.gh_app_installation_id || vars.APP_INSTALLATION_ID }}
   GITHUB_APP_PEM_FILE: ${{ secrets.gh_app_pem_file || secrets.APP_PEM_FILE }}
   TF_WORKSPACE: ${{ inputs.gh_owner || vars.OWNER }}
-  TF_VAR_path: ${{ inputs.path || 'test.yaml' }}
+  TF_VAR_path: iac/${{ inputs.path || 'test.yaml' }}
 
 jobs:
   terraform:
@@ -55,8 +55,17 @@ jobs:
         shell: bash
 
     steps:
-      - name: Checkout the repository to the runner
+      - name: Checkout called repository
         uses: actions/checkout@v4
+        with:
+          repository: 'xebis/github-organization-as-code'
+      
+      - name: Checkout caller YAML configuration
+        uses: actions/checkout@v4
+        with:
+          path: iac
+          sparse-checkout: ${{ inputs.path || 'test.yaml' }}
+          sparse-checkout-cone-mode: false
 
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v3
