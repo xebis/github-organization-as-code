@@ -39,11 +39,11 @@ env:
   AWS_ENDPOINT_URL_S3: ${{ inputs.aws_endpoint_url_s3 || vars.AWS_ENDPOINT_URL_S3 }}
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id || secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key || secrets.AWS_SECRET_ACCESS_KEY }}
-  GITHUB_OWNER: ${{ inputs.gh_owner || vars.OWNER }}
-  GITHUB_APP_ID: ${{ inputs.gh_app_id || vars.APP_ID }}
-  GITHUB_APP_INSTALLATION_ID: ${{ inputs.gh_app_installation_id || vars.APP_INSTALLATION_ID }}
-  GITHUB_APP_PEM_FILE: ${{ secrets.gh_app_pem_file || secrets.APP_PEM_FILE }}
-  TF_WORKSPACE: ${{ inputs.gh_owner || vars.OWNER }}
+  GITHUB_OWNER: ${{ inputs.gh_owner || vars.GH_OWNER }}
+  GITHUB_APP_ID: ${{ inputs.gh_app_id || vars.GH_APP_ID }}
+  GITHUB_APP_INSTALLATION_ID: ${{ inputs.gh_app_installation_id || vars.GH_APP_INSTALLATION_ID }}
+  GITHUB_APP_PEM_FILE: ${{ secrets.gh_app_pem_file || secrets.GH_APP_PEM_FILE }}
+  TF_WORKSPACE: ${{ inputs.gh_owner || vars.GH_OWNER }}
   TF_VAR_path: iac/${{ inputs.path || 'test.yaml' }}
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
           sparse-checkout: ${{ inputs.path || 'test.yaml' }}
           sparse-checkout-cone-mode: false
 
-      - name: Setup Terraform with specified version on the runner
+      - name: Setup Terraform with specified version
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.11.0
@@ -82,7 +82,8 @@ jobs:
         run: terraform plan -no-color -input=false
         continue-on-error: true
       
-      - uses: actions/github-script@v7
+      - name: Terraform plan as the PR comment
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
@@ -131,10 +132,10 @@ jobs:
               body: output
             });
 
-      - name: Terraform Plan Status
+      - name: Terraform plan status
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
-      - name: Terraform Apply
+      - name: Terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false

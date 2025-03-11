@@ -137,11 +137,11 @@ Set up GitHub actions, variables and secrets:
         - `AWS_SECRET_ACCESS_KEY`
     - Variables
       - **New repository variable**
-        - `APP_ID` (`GITHUB_APP_ID`)
-        - `APP_INSTALLATION_ID` (`GITHUB_APP_INSTALLATION_ID`)
+        - `GH_APP_ID` (`GITHUB_APP_ID`)
+        - `GH_APP_INSTALLATION_ID` (`GITHUB_APP_INSTALLATION_ID`)
         - `AWS_ENDPOINT_URL_S3`
         - `AWS_REGION`
-        - `OWNER` (`GITHUB_OWNER`)
+        - `GH_OWNER` (`GITHUB_OWNER`)
 
 ## Usage
 
