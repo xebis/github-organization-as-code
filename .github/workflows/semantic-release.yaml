@@ -1,0 +1,13 @@
+---
+name: Semantic Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-reusable-release:
+    uses: xebis/github-actions-and-workflows/.github/workflows/semantic-release.yaml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
