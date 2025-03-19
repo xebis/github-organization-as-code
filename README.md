@@ -155,21 +155,40 @@ The GitHub organization YAML configuration post a Terraform plan as a pull reque
 ```yaml
 ---
 default-properties: # OPTIONAL
-  visibility: public # OPTIONAL
-  has_issues: true # OPTIONAL
-  has_discussions: true # OPTIONAL
-  has_projects: true # OPTIONAL
-  has_wiki: true # OPTIONAL
+  # Global properties
+  visibility: public # OPTIONAL, DEFAULT public
+  # Global features
+  has_issues: true # OPTIONAL, DEFAULT false
+  has_discussions: true # OPTIONAL, DEFAULT false
+  has_projects: true # OPTIONAL, DEFAULT false
+  has_wiki: true # OPTIONAL, DEFAULT false
+  # Global settings
+  allow_merge_commit: false # OPTIONAL, DEFAULT true
+  allow_squash_merge: true # OPTIONAL, DEFAULT true
+  allow_rebase_merge: true # OPTIONAL, DEFAULT true
+  allow_auto_merge: true # OPTIONAL, DEFAULT false
+  delete_branch_on_merge: true # OPTIONAL, DEFAULT false
 repositories:
   - name: repo-slug
-    description: Repository description. # OPTIONAL
-    topics: # OPTIONAL
+    # Repository metadata
+    description: Repository description. # OPTIONAL, DEFAULT none
+    homepage_url: http://repo.domain/ # OPTIONAL, DEFAULT none
+    topics: # OPTIONAL, DEFAULT none
       - github-topic-1
-    visibility: public # OPTIONAL
-    has_issues: true # OPTIONAL
-    has_discussions: true # OPTIONAL
-    has_projects: true # OPTIONAL
-    has_wiki: true # OPTIONAL
+    # Repository properties
+    visibility: public # OPTIONAL, DEFAULT public
+    is_template: true # OPTIONAL, DEFAULT false
+    # Repository features
+    has_issues: true # OPTIONAL, DEFAULT false
+    has_discussions: true # OPTIONAL, DEFAULT false
+    has_projects: true # OPTIONAL, DEFAULT false
+    has_wiki: true # OPTIONAL, DEFAULT false
+    # Repository settings
+    allow_merge_commit: false # OPTIONAL, DEFAULT true
+    allow_squash_merge: true # OPTIONAL, DEFAULT true
+    allow_rebase_merge: true # OPTIONAL, DEFAULT true
+    allow_auto_merge: true # OPTIONAL, DEFAULT false
+    delete_branch_on_merge: true # OPTIONAL, DEFAULT false
 ```
 
 Defaults are the same as in the Terraform provider `github` resource `github_repository`, see [Terraform Registry / Providers / integrations / github / resources / github_repository](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository#argument-reference).
