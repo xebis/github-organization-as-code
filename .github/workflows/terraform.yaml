@@ -44,7 +44,7 @@ env:
   GITHUB_APP_INSTALLATION_ID: ${{ inputs.gh_app_installation_id || vars.GH_APP_INSTALLATION_ID }}
   GITHUB_APP_PEM_FILE: ${{ secrets.gh_app_pem_file || secrets.GH_APP_PEM_FILE }}
   TF_WORKSPACE: ${{ inputs.gh_owner || vars.GH_OWNER }}
-  TF_VAR_path: iac/${{ inputs.path || 'test.yaml' }}
+  TF_VAR_path: ../iac/${{ inputs.path || 'test.yaml' }}
 
 jobs:
   terraform:
@@ -74,12 +74,12 @@ jobs:
       
       - name: Terraform init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform init
 
       - name: Terraform plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false
+        run: terraform -chdir=terraform plan -no-color -input=false
         continue-on-error: true
       
       - name: Terraform plan as the PR comment
@@ -138,4 +138,4 @@ jobs:
 
       - name: Terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: terraform -chdir=terraform apply -auto-approve -input=false

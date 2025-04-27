@@ -211,9 +211,9 @@ export GITHUB_APP_PEM_FILE=$(cat <app-private-key.pem>)
 export TF_WORKSPACE="$GITHUB_OWNER"
 export TF_VAR_path="test.yaml"
 
-terraform init
-terraform plan
-terraform apply
+terraform -chdir=terraform init
+terraform -chdir=terraform plan
+terraform -chdir=terraform apply
 ```
 
 ## Testing
