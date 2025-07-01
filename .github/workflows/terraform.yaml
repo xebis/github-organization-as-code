@@ -44,7 +44,7 @@ env:
   GITHUB_APP_INSTALLATION_ID: ${{ inputs.gh_app_installation_id || vars.GH_APP_INSTALLATION_ID }}
   GITHUB_APP_PEM_FILE: ${{ secrets.gh_app_pem_file || secrets.GH_APP_PEM_FILE }}
   TF_WORKSPACE: ${{ inputs.gh_owner || vars.GH_OWNER }}
-  TF_VAR_path: ../iac/${{ inputs.path || 'test.yaml' }}
+  TF_VAR_path: ${{ inputs.path && format('../iac/{0}', inputs.path) || '../test.yaml' }}
 
 jobs:
   terraform:
@@ -61,6 +61,7 @@ jobs:
           repository: 'xebis/github-organization-as-code'
       
       - name: Checkout caller YAML configuration
+        if: github.repository != 'xebis/github-organization-as-code'
         uses: actions/checkout@v4
         with:
           path: iac
