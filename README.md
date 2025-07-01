@@ -198,6 +198,7 @@ Defaults are the same as in the Terraform provider `github` resource `github_rep
 Apply the configuration using Terraform:
 
 ```shell
+# Environment variables
 export AWS_REGION=<aws-region>
 export AWS_ENDPOINT_URL_S3=<aws-endpoint-url-s3> # Only for non-AWS S3 compatible APIs
 export AWS_ACCESS_KEY_ID=<aws-access-key-id>
@@ -209,8 +210,9 @@ export GITHUB_APP_INSTALLATION_ID=<app-installation-id>
 export GITHUB_APP_PEM_FILE=$(cat <app-private-key.pem>)
 
 export TF_WORKSPACE="$GITHUB_OWNER"
-export TF_VAR_path="test.yaml"
+export TF_VAR_path="../test.yaml"
 
+# Terraform
 terraform -chdir=terraform init
 terraform -chdir=terraform plan
 terraform -chdir=terraform apply
