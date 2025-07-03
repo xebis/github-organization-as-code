@@ -1,8 +1,25 @@
 ---
 organization:
   repository-defaults:
-    # Global features
+    # All-repository default features
     has_issues: true
+    # All-repository default rulesets
+    rulesets:
+      - name: "Main Branch"
+        target: branch
+        enforcement: active
+        conditions:
+          ref_name:
+            include:
+              - ~DEFAULT_BRANCH
+        rules:
+          creation: false
+          update: false
+          deletion: false
+          pull_request:
+            required_approving_review_count: 0
+          required_linear_history: true
+          required_signatures: true
 repositories:
   - name: .github
     # Repository metadata

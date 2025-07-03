@@ -152,23 +152,44 @@ The GitHub organization YAML configuration post a Terraform plan as a pull reque
 
 ### GitHub Organization YAML
 
+The example below demonstrates the full range of capabilities available in the organization YAML configuration.
+
 ```yaml
 ---
 organization:
   repository-defaults: # OPTIONAL
-    # Global properties
+    # All-repository default properties
     visibility: public # OPTIONAL, DEFAULT public
-    # Global features
+    # All-repository default features
     has_issues: true # OPTIONAL, DEFAULT false
     has_discussions: true # OPTIONAL, DEFAULT false
     has_projects: true # OPTIONAL, DEFAULT false
     has_wiki: true # OPTIONAL, DEFAULT false
-    # Global settings
+    # All-repository default settings
     allow_merge_commit: false # OPTIONAL, DEFAULT true
     allow_squash_merge: true # OPTIONAL, DEFAULT true
     allow_rebase_merge: true # OPTIONAL, DEFAULT true
     allow_auto_merge: true # OPTIONAL, DEFAULT false
     delete_branch_on_merge: true # OPTIONAL, DEFAULT false
+    # All-repository default rulesets
+    rulesets:
+      - name: "Main Branch"
+        target: branch # REQUIRED, VALUES branch or tag
+        enforcement: active # REQUIRED, VALUES disabled or active
+        conditions: # OPTIONAL, DEFAULT empty
+          ref_name:
+            include: # OPTIONAL, DEFAULT empty, VALUE array of ref names or patterns to include, special values ~ALL and ~DEFAULT_BRANCH also accepted
+              - ~DEFAULT_BRANCH
+            exclude: # OPTIONAL, DEFAULT empty
+        rules:
+          creation: false # OPTIONAL, DEFAULT true
+          update: false # OPTIONAL, DEFAULT true
+          update_allows_fetch_and_merge: false # OPTIONAL, DEFAULT false
+          deletion: false # OPTIONAL, DEFAULT true
+          required_linear_history: true # OPTIONAL, DEFAULT false
+          required_signatures: true # OPTIONAL, DEFAULT false
+          pull_request: # OPTIONAL, DEFAULT empty MEANING does not require a pull request before merging
+            required_approving_review_count: 0 # OPTIONAL, DEFAULT 0
 repositories:
   - name: repo-slug
     # Repository metadata
@@ -192,7 +213,7 @@ repositories:
     delete_branch_on_merge: true # OPTIONAL, DEFAULT false
 ```
 
-Defaults are the same as in the Terraform provider `github` resource `github_repository`, see [Terraform Registry / Providers / integrations / github / resources / github_repository](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository#argument-reference).
+Defaults are usually the same as in the Terraform provider `github` resource `github_repository`, see [Terraform Registry / Providers / integrations / github / resources / github_repository](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository#argument-reference).
 
 ### Local Usage
 
