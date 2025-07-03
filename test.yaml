@@ -1,6 +1,6 @@
 ---
 organization:
-  repository-defaults:
+  all-repositories:
     # All-repository default features
     has_issues: true
     # All-repository default rulesets

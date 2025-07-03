@@ -157,7 +157,7 @@ The example below demonstrates the full range of capabilities available in the o
 ```yaml
 ---
 organization:
-  repository-defaults: # OPTIONAL
+  all-repositories: # OPTIONAL
     # All-repository default properties
     visibility: public # OPTIONAL, DEFAULT public
     # All-repository default features

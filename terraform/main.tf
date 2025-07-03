@@ -1,9 +1,9 @@
 locals {
-  config              = yamldecode(file(var.path))
-  repository_defaults = try(local.config.organization.repository-defaults, null)
-  repositories        = local.config.repositories
-  repo_ruleset_combinations = [
-    for pair in setproduct(local.repositories, local.repository_defaults.rulesets) : {
+  config           = yamldecode(file(var.path))
+  all_repositories = try(local.config.organization.all-repositories, null)
+  repositories     = local.config.repositories
+  all_repositories_rulesets = [
+    for pair in setproduct(local.repositories, local.all_repositories.rulesets) : {
       repository = pair[0]
       ruleset    = pair[1]
     }
@@ -20,27 +20,27 @@ resource "github_repository" "repo" {
   topics       = try(each.value.topics, null)
 
   # Properties
-  visibility  = try(each.value.visibility, local.repository_defaults.visibility, null)
+  visibility  = try(each.value.visibility, local.all_repositories.visibility, null)
   is_template = try(each.value.is_template, null)
 
   # Features
-  has_issues      = try(each.value.has_issues, local.repository_defaults.has_issues, null)
-  has_discussions = try(each.value.has_discussions, local.repository_defaults.has_discussions, null)
-  has_projects    = try(each.value.has_projects, local.repository_defaults.has_projects, null)
-  has_wiki        = try(each.value.has_wiki, local.repository_defaults.has_wiki, null)
+  has_issues      = try(each.value.has_issues, local.all_repositories.has_issues, null)
+  has_discussions = try(each.value.has_discussions, local.all_repositories.has_discussions, null)
+  has_projects    = try(each.value.has_projects, local.all_repositories.has_projects, null)
+  has_wiki        = try(each.value.has_wiki, local.all_repositories.has_wiki, null)
 
   # Settings
-  allow_merge_commit     = try(each.value.allow_merge_commit, local.repository_defaults.allow_merge_commit, null)
-  allow_squash_merge     = try(each.value.allow_squash_merge, local.repository_defaults.allow_squash_merge, null)
-  allow_rebase_merge     = try(each.value.allow_rebase_merge, local.repository_defaults.allow_rebase_merge, null)
-  allow_auto_merge       = try(each.value.allow_auto_merge, local.repository_defaults.allow_auto_merge, null)
-  delete_branch_on_merge = try(each.value.delete_branch_on_merge, local.repository_defaults.delete_branch_on_merge, null)
+  allow_merge_commit     = try(each.value.allow_merge_commit, local.all_repositories.allow_merge_commit, null)
+  allow_squash_merge     = try(each.value.allow_squash_merge, local.all_repositories.allow_squash_merge, null)
+  allow_rebase_merge     = try(each.value.allow_rebase_merge, local.all_repositories.allow_rebase_merge, null)
+  allow_auto_merge       = try(each.value.allow_auto_merge, local.all_repositories.allow_auto_merge, null)
+  delete_branch_on_merge = try(each.value.delete_branch_on_merge, local.all_repositories.delete_branch_on_merge, null)
 }
 
 resource "github_repository_ruleset" "this" {
   for_each = {
-    for combo in local.repo_ruleset_combinations :
-    "${combo.repository.name}-${combo.ruleset.name}" => combo
+    for repository_ruleset in local.all_repositories_rulesets :
+    "${repository_ruleset.repository.name}-${repository_ruleset.ruleset.name}" => repository_ruleset
   }
 
   # Metadata
