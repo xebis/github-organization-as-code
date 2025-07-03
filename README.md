@@ -154,20 +154,21 @@ The GitHub organization YAML configuration post a Terraform plan as a pull reque
 
 ```yaml
 ---
-default-properties: # OPTIONAL
-  # Global properties
-  visibility: public # OPTIONAL, DEFAULT public
-  # Global features
-  has_issues: true # OPTIONAL, DEFAULT false
-  has_discussions: true # OPTIONAL, DEFAULT false
-  has_projects: true # OPTIONAL, DEFAULT false
-  has_wiki: true # OPTIONAL, DEFAULT false
-  # Global settings
-  allow_merge_commit: false # OPTIONAL, DEFAULT true
-  allow_squash_merge: true # OPTIONAL, DEFAULT true
-  allow_rebase_merge: true # OPTIONAL, DEFAULT true
-  allow_auto_merge: true # OPTIONAL, DEFAULT false
-  delete_branch_on_merge: true # OPTIONAL, DEFAULT false
+organization:
+  repository-defaults: # OPTIONAL
+    # Global properties
+    visibility: public # OPTIONAL, DEFAULT public
+    # Global features
+    has_issues: true # OPTIONAL, DEFAULT false
+    has_discussions: true # OPTIONAL, DEFAULT false
+    has_projects: true # OPTIONAL, DEFAULT false
+    has_wiki: true # OPTIONAL, DEFAULT false
+    # Global settings
+    allow_merge_commit: false # OPTIONAL, DEFAULT true
+    allow_squash_merge: true # OPTIONAL, DEFAULT true
+    allow_rebase_merge: true # OPTIONAL, DEFAULT true
+    allow_auto_merge: true # OPTIONAL, DEFAULT false
+    delete_branch_on_merge: true # OPTIONAL, DEFAULT false
 repositories:
   - name: repo-slug
     # Repository metadata
