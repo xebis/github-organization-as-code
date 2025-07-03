@@ -37,10 +37,10 @@ resource "github_repository" "repo" {
   delete_branch_on_merge = try(each.value.delete_branch_on_merge, local.all_repositories.delete_branch_on_merge, null)
 }
 
-resource "github_repository_ruleset" "this" {
+resource "github_repository_ruleset" "all_repositories" {
   for_each = {
     for repository_ruleset in local.all_repositories_rulesets :
-    "${repository_ruleset.repository.name}-${repository_ruleset.ruleset.name}" => repository_ruleset
+    format("%s/%s", "${repository_ruleset.repository.name}", replace(lower("${repository_ruleset.ruleset.name}"), " ", "_")) => repository_ruleset
   }
 
   # Metadata
