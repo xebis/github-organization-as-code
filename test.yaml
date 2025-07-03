@@ -1,7 +1,8 @@
 ---
-default-properties:
-  # Global features
-  has_issues: true
+organization:
+  repository-defaults:
+    # Global features
+    has_issues: true
 repositories:
   - name: .github
     # Repository metadata
