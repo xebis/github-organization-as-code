@@ -13,9 +13,9 @@ organization:
             include:
               - ~DEFAULT_BRANCH
         rules:
-          creation: false
-          update: false
-          deletion: false
+          creation: true
+          update: true
+          deletion: true
           pull_request:
             required_approving_review_count: 0
           required_linear_history: true
