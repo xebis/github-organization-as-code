@@ -182,10 +182,10 @@ organization:
               - ~DEFAULT_BRANCH
             exclude: # OPTIONAL, DEFAULT empty
         rules:
-          creation: false # OPTIONAL, DEFAULT true
-          update: false # OPTIONAL, DEFAULT true
+          creation: true # OPTIONAL, DEFAULT false
+          update: true # OPTIONAL, DEFAULT false
           update_allows_fetch_and_merge: false # OPTIONAL, DEFAULT false
-          deletion: false # OPTIONAL, DEFAULT true
+          deletion: true # OPTIONAL, DEFAULT false
           required_linear_history: true # OPTIONAL, DEFAULT false
           required_signatures: true # OPTIONAL, DEFAULT false
           pull_request: # OPTIONAL, DEFAULT empty MEANING does not require a pull request before merging
