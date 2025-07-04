@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.12.1](https://github.com/xebis/github-organization-as-code/compare/v0.12.0...v0.12.1) (2025-07-04)
+
+### Bug Fixes
+
+* reversed lifecycle rules behavior ([d737920](https://github.com/xebis/github-organization-as-code/commit/d73792015b5d7bd7664915af240c33a39d9c1bc0))
+
 ## [0.12.0](https://github.com/xebis/github-organization-as-code/compare/v0.11.0...v0.12.0) (2025-07-04)
 
 ### Features
