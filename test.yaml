@@ -14,12 +14,10 @@ organization:
               - ~DEFAULT_BRANCH
         rules:
           creation: true
-          update: true
           deletion: true
           pull_request:
             required_approving_review_count: 0
           required_linear_history: true
-          required_signatures: true
 repositories:
   - name: .github
     # Repository metadata

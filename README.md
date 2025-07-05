@@ -132,7 +132,7 @@ Set up GitHub actions, variables and secrets:
   - Secrets and variables / Actions / Actions secrets and variables
     - Secrets
       - **New repository secret**
-        - `APP_PEM_FILE` (`GITHUB_APP_PEM_FILE` contents)
+        - `GH_APP_PEM_FILE` (`GITHUB_APP_PEM_FILE` contents)
         - `AWS_ACCESS_KEY_ID`
         - `AWS_SECRET_ACCESS_KEY`
     - Variables
