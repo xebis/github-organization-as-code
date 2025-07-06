@@ -49,6 +49,16 @@ resource "github_repository_ruleset" "all_repositories" {
   target      = try(each.value.ruleset.target, null)
   enforcement = try(each.value.ruleset.enforcement, null)
 
+  # Bypass actors
+  dynamic "bypass_actors" {
+    for_each = try(each.value.ruleset.bypass_actors, [])
+    content {
+      actor_id    = bypass_actors.value.actor_id
+      actor_type  = bypass_actors.value.actor_type
+      bypass_mode = bypass_actors.value.bypass_mode
+    }
+  }
+
   # Conditions
   dynamic "conditions" {
     for_each = try(length(each.value.ruleset.conditions) > 0 ? [each.value.ruleset.conditions] : [], [])

@@ -8,6 +8,11 @@ organization:
       - name: "Main Branch"
         target: branch
         enforcement: active
+        bypass_actors:
+            # Xebis GitHub Semantic Release https://github.com/apps/xebis-github-semantic-release
+          - actor_id: 1527160
+            actor_type: Integration
+            bypass_mode: always
         conditions:
           ref_name:
             include:
