@@ -176,9 +176,14 @@ organization:
       - name: "Main Branch"
         target: branch # REQUIRED, VALUES branch or tag
         enforcement: active # REQUIRED, VALUES disabled or active
+        bypass_actors: # OPTIONAL, DEFAULT empty
+            # Xebis GitHub Semantic Release https://github.com/apps/xebis-github-semantic-release
+          - actor_id: 1527160 # REQUIRED, VALUE The ID of the actor
+            actor_type: Integration # REQUIRED, VALUES RepositoryRole, Team, Integration, OR OrganizationAdmin
+            bypass_mode: always # REQUIRED, VALUES always or pull_request
         conditions: # OPTIONAL, DEFAULT empty
           ref_name:
-            include: # OPTIONAL, DEFAULT empty, VALUE array of ref names or patterns to include, special values ~ALL and ~DEFAULT_BRANCH also accepted
+            include: # OPTIONAL, DEFAULT empty, VALUE array of ref names or patterns to include, SPECIAL VALUES ~ALL and ~DEFAULT_BRANCH also accepted
               - ~DEFAULT_BRANCH
             exclude: # OPTIONAL, DEFAULT empty
         rules:
