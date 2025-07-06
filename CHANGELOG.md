@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.13.0](https://github.com/xebis/github-organization-as-code/compare/v0.12.1...v0.13.0) (2025-07-06)
+
+### Features
+
+* all-repository ruleset bypass actors ([46253c6](https://github.com/xebis/github-organization-as-code/commit/46253c66d7c47b4c1775dcb05b4e099c57d0ffae))
+
+### Bug Fixes
+
+* main branch ruleset shouldn't prevent pull request merges ([14e62cf](https://github.com/xebis/github-organization-as-code/commit/14e62cf306da922b7c6a8931ee9f303b9f8cf24c))
+
 ## [0.12.1](https://github.com/xebis/github-organization-as-code/compare/v0.12.0...v0.12.1) (2025-07-04)
 
 ### Bug Fixes
