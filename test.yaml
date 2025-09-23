@@ -3,6 +3,12 @@ organization:
   all-repositories:
     # All-repository default features
     has_issues: true
+    # All-repository default settings
+    allow_merge_commit: false
+    allow_squash_merge: true
+    allow_rebase_merge: true
+    allow_auto_merge: true
+    delete_branch_on_merge: true
     # All-repository default rulesets
     rulesets:
       - name: "Main Branch"
@@ -18,7 +24,6 @@ organization:
             include:
               - ~DEFAULT_BRANCH
         rules:
-          creation: true
           deletion: true
           pull_request:
             required_approving_review_count: 0
@@ -31,9 +36,3 @@ repositories:
       - github-organization-profile
       - github-profile
       - github-profile-readme
-    # Repository settings
-    allow_merge_commit: false
-    allow_squash_merge: true
-    allow_rebase_merge: true
-    allow_auto_merge: true
-    delete_branch_on_merge: true
