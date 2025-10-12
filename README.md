@@ -245,7 +245,17 @@ terraform -chdir=terraform plan
 terraform -chdir=terraform apply
 ```
 
+## Development
+
+Format Terraform configuration by `terraform -chdir=terraform fmt -recursive`.
+
 ## Testing
+
+### Terraform Test
+
+Run test scenarios in [`terraform/tests`](terraform/tests/) by `terraform -chdir=terraform test`.
+
+### End-to-end Tessting
 
 This repository is tested using [`test.yaml`](test.yaml) as the configuration file for the [Xebis Test GitHub Organization](https://github.com/xebis-test) settings and repositories.
 
