@@ -56,13 +56,13 @@ jobs:
 
     steps:
       - name: Checkout called repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: 'xebis/github-organization-as-code'
       
       - name: Checkout caller YAML configuration
         if: github.repository != 'xebis/github-organization-as-code'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: iac
           sparse-checkout: ${{ inputs.path || 'test.yaml' }}
@@ -71,7 +71,7 @@ jobs:
       - name: Setup Terraform with specified version
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.11.0
+          terraform_version: 1.13.3
       
       - name: Terraform init
         id: init

@@ -255,7 +255,7 @@ Format Terraform configuration by `terraform -chdir=terraform fmt -recursive`.
 
 Run test scenarios in [`terraform/tests`](terraform/tests/) by `terraform -chdir=terraform test`.
 
-### End-to-end Tessting
+### End-to-end Testing
 
 This repository is tested using [`test.yaml`](test.yaml) as the configuration file for the [Xebis Test GitHub Organization](https://github.com/xebis-test) settings and repositories.
 

@@ -1,0 +1,46 @@
+---
+on:
+  push:
+    exclude-branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ENDPOINT_URL_S3: ${{ vars.AWS_ENDPOINT_URL_S3 }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  GITHUB_OWNER: ${{ vars.GH_OWNER }}
+  GITHUB_APP_ID: ${{ vars.GH_APP_ID }}
+  GITHUB_APP_INSTALLATION_ID: ${{ vars.GH_APP_INSTALLATION_ID }}
+  GITHUB_APP_PEM_FILE: ${{ secrets.GH_APP_PEM_FILE }}
+  TF_WORKSPACE: ${{ vars.GH_OWNER }}
+  TF_VAR_path: ${{ '../test.yaml' }}
+
+jobs:
+  terraform-qa:
+    name: "Terraform QA"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      
+      - name: Setup Terraform with specified version
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.13.3
+      
+      - name: Terraform init
+        run: terraform -chdir=terraform init
+
+      - name: Terraform format check
+        run: terraform -chdir=terraform fmt -check -recursive -no-color
+
+      - name: Terraform run tests
+        run: terraform -chdir=terraform test -no-color
