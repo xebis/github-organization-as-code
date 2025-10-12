@@ -1,10 +1,10 @@
 locals {
   config           = yamldecode(file(var.path))
-  all_repositories = try(local.config.organization.all-repositories, null)
-  repositories     = local.config.repositories
+  all_repositories = try(local.config.organization.all-repositories, [])
+  repositories     = try(local.config.repositories, [])
   all_repositories_rulesets = [
-    for pair in setproduct(local.repositories, local.all_repositories.rulesets) : {
-      repository = pair[0]
+    for pair in try(setproduct(local.repositories, local.all_repositories.rulesets), []) : {
+      repository = pair[0],
       ruleset    = pair[1]
     }
   ]
