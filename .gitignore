@@ -1,5 +1,9 @@
-# Dotenv files
-.env*
+# Direnv files
+.env
+.envrc
+
+# Private Keys
+*.pem
 
 # Local .terraform directories
 **/.terraform/*
