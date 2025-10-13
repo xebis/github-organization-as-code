@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.1](https://github.com/xebis/github-organization-as-code/compare/v0.13.0...v0.13.1) (2025-10-13)
+
+### Bug Fixes
+
+* empty organization or repositories configurations shouldn't fail ([d055763](https://github.com/xebis/github-organization-as-code/commit/d0557639379115fb4cd43ae195e4a2f8d30ce67c))
+
 ## [0.13.0](https://github.com/xebis/github-organization-as-code/compare/v0.12.1...v0.13.0) (2025-07-06)
 
 ### Features
