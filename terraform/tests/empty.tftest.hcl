@@ -7,6 +7,11 @@ run "empty_file" {
 
   assert {
     condition     = local.config == null
-    error_message = "Expected empty file to produce empty result."
+    error_message = "Expected empty file to produce empty configuration."
+  }
+
+  assert {
+    condition     = local.repositories == []
+    error_message = "Expected empty file to produce empty repositories."
   }
 }
