@@ -29,7 +29,7 @@ run "organization_repository_repositories_values" {
   }
 
   assert {
-    condition     = local.repositories == [{
+    condition = local.repositories == [{
       name                   = "example"
       description            = "An example repository"
       homepage_url           = "https://example.com"
